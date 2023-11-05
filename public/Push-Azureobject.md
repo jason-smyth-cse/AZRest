@@ -6,38 +6,34 @@ Gets and Azure API compliant hash table / powershell object from Azure cloud obj
 
 ### Parameters:
 
--apiversions   = A hashtable representing current API versions
+-azobject      = A hashtable representing an azure object.
 -authHeader    = A hashtable (header) with valid authentication for Azure Management
--id            = An Azure object reference id (string).
+-azobject      = A hashtable (dictionary) of Azure API versions.
+-unescape      = may be set to \$false to prevent the defaul behaviour of unescaping JSON
 
 ### Example:
 
-`$object = Get-Azureobject -AuthHeader $authHeader -Apiversions $AzAPIVersions -id $azobject`
+```powershell
+ Push-Azureobject -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
+```
 
 ### General Usage:
 
-This module requires a valid header with read access to the identified Azure object in its subscription.  
+This module requires a valid header with write access to the identified Azure Resource Group.  
 
 Note the requirement for the APIVersions dictionary object which must have been created earlier using the Get-AzureAPIVersions function.  This will provide the function a reference table to select the latest API versions for a given object type.  
 
-
-
 ```powershell
-
 #Get an Authorised Header
 
-$authHeader = Get-Header -scope "azure"  -Tenant "laurierhodes.info" -AppId "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX" `
+$authHeader = Get-Header -scope "azure"  -Tenant "laurierhodes.info" -AppId "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" `
                          -secret $secret
 
 # Retrieve an up to date list of namespace versions (once per session)
 
 if (!$AzAPIVersions){$AzAPIVersions = Get-AzureAPIVersions -header $authHeader -SubscriptionID "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
 
-$id='/subscriptions/XXXXXXXX-XXXXXXX/resourceGroups/rg-security/providers/Microsoft.Insights/dataCollectionRules/syslogapp-001'
+$file = "C:\temp\app-001.json" 
 
-$object = $null
-$object =    Get-Azureobject -AuthHeader $authHeader -apiversions $AzAPIVersions -id $id
-
-Out-File -FilePath "C:\temp\myapp-001a.json" -InputObject (convertto-json -InputObject $object -Depth 10) -Force 
-
+Get-jsonfile -Path $file | Push-Azureobject -authHeader $authHeader -apiversions $AzAPIVersions 
 ```
