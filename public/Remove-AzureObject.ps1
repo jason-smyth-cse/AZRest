@@ -1,3 +1,4 @@
+function Remove-AzureObject(){
 <#
   Function:  Remove-AzureObject
 
@@ -10,7 +11,6 @@
     
              Remove-AzureObject -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
 #> 
-function Remove-AzureObject(){
 param(
     [parameter( Mandatory = $true, ValueFromPipeline = $true)]
     [string]$id,

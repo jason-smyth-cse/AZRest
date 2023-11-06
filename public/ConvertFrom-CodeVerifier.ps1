@@ -1,3 +1,4 @@
+function ConvertFrom-CodeVerifier {
 <#
   Function:  ConvertFrom-CodeVerifier
 
@@ -9,8 +10,6 @@
 
   Author  https://gist.github.com/watahani
 #>
-function ConvertFrom-CodeVerifier {
-
     [OutputType([String])]
     param(
         [Parameter(Mandatory = $True, ValueFromPipeline = $True)]

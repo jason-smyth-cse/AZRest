@@ -1,3 +1,4 @@
+function Get-AzureAPIVersions(){
 <#
   Function:  Get-AzureAPIVersions
 
@@ -12,7 +13,6 @@
                                       -Header $header `
                                       -SubscriptionId "ed4ef888-5466-401c-b77a-6f9cd7cc6815" 
 #>
-function Get-AzureAPIVersions(){
 param(
     [parameter( Mandatory = $true)]
     [hashtable]$header,

@@ -1,17 +1,3 @@
-<#
-  Function:  Push-Azureobject
-
-  Purpose:  Pushes and Azure API compliant hash table to the cloud
-
-  Parameters:   -azobject      = A hashtable representing an azure object.
-                -authHeader    = A hashtable (header) with valid authentication for Azure Management
-                -azobject      = A hashtable (dictionary) of Azure API versions.
-                -unescape      = may be set to $false to prevent the defaul behaviour of unescaping JSON
-
-  Example:  
-    
-             Push-Azureobject -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
-#> 
 function Push-Azureobject(){
 param(
     [parameter( Mandatory = $true, ValueFromPipeline = $true)]

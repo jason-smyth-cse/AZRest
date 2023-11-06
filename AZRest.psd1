@@ -9,20 +9,20 @@
 RootModule = 'AZRest.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.4.0'
+ModuleVersion = '1.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
 
 # ID used to uniquely identify this module
-GUID = 'fdb98040-b338-4dd3-8a93-713190c1d0dd'
+GUID = '7fcb8d52-50a4-405c-b963-947e3b053f1f'
 
 # Author of this module
 Author = 'Laurie Rhodes'
 
 
 # Description of the functionality provided by this module
-Description = 'Powershell REST module for Microsoft clouds'
+Description = 'Azure REST API Module'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.0'

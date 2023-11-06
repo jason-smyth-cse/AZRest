@@ -1,3 +1,4 @@
+function Set-AzureObject(){
 <#
   Function:  Set-AzureObject
 
@@ -14,7 +15,6 @@
     
           $object = Set-AzureObject -object $object -Subscription "2be53ae5-6e46-47df-beb9-6f3a795387b8"
 #> 
-function Set-AzureObject(){
 param(
     [parameter( Mandatory = $false)]
     [string]$Subscription,

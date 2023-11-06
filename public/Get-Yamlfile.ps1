@@ -1,3 +1,4 @@
+function Get-Yamlfile(){
 <#
   Function:  Get-Yamlfile
 
@@ -9,7 +10,6 @@
     
             $object = Get-Yamlfile `-Path "C:\templates\vmachine.yaml"
 #>
-function Get-Yamlfile(){
 param(
     [parameter( Mandatory = $true)]
     [string]$Path

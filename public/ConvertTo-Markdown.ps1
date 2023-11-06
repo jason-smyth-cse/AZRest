@@ -1,3 +1,4 @@
+Function ConvertTo-Markdown {
 <#
 .Synopsis
    Converts a PowerShell object to a Markdown table.
@@ -20,7 +21,6 @@ Source:
 https://www.powershellgallery.com/packages/PSMarkdown/1.1/Content/ConvertTo-Markdown.ps1
 
 #>
-Function ConvertTo-Markdown {
     [CmdletBinding()]
     [OutputType([string])]
     Param (

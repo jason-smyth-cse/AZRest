@@ -1,3 +1,4 @@
+function Get-Jsonfile(){
 <#
   Function:  Get-JSONfile
 
@@ -9,7 +10,6 @@
     
             $object = Get-JSONfile `-Path "C:\templates\vmachine.json"
 #>
-function Get-Jsonfile(){
 param(
     [parameter( Mandatory = $true)]
     [string]$Path

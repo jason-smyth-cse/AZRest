@@ -1,5 +1,4 @@
-function ConvertTo-Yaml
-{
+function ConvertTo-Yaml{
 <#
  .SYNOPSIS
    creates a YAML description of the data in the object

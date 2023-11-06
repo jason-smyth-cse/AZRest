@@ -1,3 +1,4 @@
+function Get-AzureObject(){
 <#
   Function:  Get-AzureObject
 
@@ -11,8 +12,6 @@
     
              Get-Azureobject -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
 #> 
-
-function Get-AzureObject(){
 param(
     [parameter( Mandatory = $true, ValueFromPipeline = $true)]
     [string]$id,
