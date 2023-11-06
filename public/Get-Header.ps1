@@ -30,11 +30,15 @@ function Get-Header(){
         [string]$Secret,
         [Parameter(ParameterSetName="inter")]
         [Switch]$interactive=$false,
+        [Parameter(ParameterSetName="RefreshToken")]
+        [PSCustomObject]$TokenObject
         [Parameter(mandatory=$false)]
         [string]$Proxy,
         [Parameter(mandatory=$false)]
         [PSCredential]$ProxyCredential
     )
+ 
+
  
  <#
   Function:  Get-Header
@@ -95,7 +99,7 @@ function Get-Header(){
      Get-Header -scope "graph" -Tenant "disney.com" -AppId "aa73b052-6cea-4f17-b54b-6a536be5c832" -Thumbprint "B35E2C978F83B49C36611802DC08B7DF7B58AB08" 
      Get-Header -scope "azure" -Tenant "disney.com" -AppId "aa73b052-6cea-4f17-b54b-6a536be5c715" -Secret 'xznhW@w/.Yz14[vC0XbNzDFwiRRxUtZ3'
      Get-Header -scope "azure" -Tenant "disney.com" -Interactive
-
+     Get-Header -scope "azure" -Tenant "disney.com" -Token %MyTokenObject
 
 #> 
  
@@ -466,6 +470,69 @@ function Get-Header(){
          
          } # end interactive block
 
+# If dealing with a token object the access token will come from a different method than other approaches
+
+if ($PSCmdlet.ParameterSetName -eq 'RefreshToken') {
+
+           # check if refresh tokens are about to expire
+           $expirytime = ([DateTime]$TokenObject.Expires_in).ToUniversalTime()     
+           
+           # If the token is close to expiry, refresh.
+           if (((Get-Date).AddSeconds(10).ToUniversalTime()) -gt ($expirytime.AddMinutes(-2)) ) {
+
+                # Need to initiate a token Refresh
+                
+                # Note that powershell is maintaining pointers to the Token Object so if it is updated
+                # its updated globally.
+
+                # We have a previous refresh token. 
+                # use it to get a new token
+
+                $redirectUri = $([System.Web.HttpUtility]::UrlEncode($TokenObject.redirect_uri))                   
+                $body = "grant_type=refresh_token&refresh_token=$($TokenObject.refresh_token)&redirect_uri=$($redirectUri)&client_id=$($Token.clientId)"
+
+                $Response = $null                
+                try{
+
+                    $RequestSplat = @{
+                        Uri = $TokenObject.token_endpoint
+                        Method = "POST"
+                        Body = $Body 
+                        ContentType = "application/x-www-form-urlencoded"
+                        UseBasicParsing = $true
+                    }
+
+                   #Construct parameters if they exist
+                   if($Proxy){ $RequestSplat.Add('Proxy', $Proxy) }
+                   if($ProxyCredential){ $RequestSplat.Add('ProxyCredential', $ProxyCredential) }
+
+                   $Response = Invoke-RestMethod @RequestSplat  
+
+
+                }
+                  catch{
+                            throw "token refresh failed"
+                }
+
+                if ($Response){
+
+                    $Token.expires_in  = (Get-Date).AddSeconds([int]($Response.expires_in) ).ToUniversalTime()
+                    $Token.access_token  = $Response.access_token
+                    $Token.refresh_token  = $Response.refresh_token    
+
+                }                
+                
+                
+
+            }
+            
+            #Add the token to headers for the request
+            $Header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+            $Header.Add("Authorization", "Bearer "+$Token.access_token)       
+                
+    
+}else # everything not using refresh tokens will use a POST request off Microsoft's IdP to get a token
+{
 
             $RequestSplat = @{
                 Uri = $TokenEndpoint
@@ -474,20 +541,22 @@ function Get-Header(){
                 UseBasicParsing = $true
             }
 
-
            #Construct parameters if they exist
            if($Proxy){ $RequestSplat.Add('Proxy', $Proxy) }
            if($ProxyCredential){ $RequestSplat.Add('ProxyCredential', $ProxyCredential) }
                        
            $Response = Invoke-WebRequest @RequestSplat  
-           $ResponseJSON = $Response|ConvertFrom-Json
- 
+           $ResponseObject = $Response | ConvertFrom-Json
  
             #Add the token to headers for the request
             $Header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-            $Header.Add("Authorization", "Bearer "+$ResponseJSON.access_token)
-            $Header.Add("Content-Type", "application/json")
+            $Header.Add("Authorization", "Bearer "+$ResponseObject.access_token)
 
+}
+
+
+            $Header.Add("Content-Type", "application/json")
+            
             # storage requests require two different keys in the header 
             if ($Scope -eq "storage"){
                 $Header.Add("x-ms-version", "2019-12-12")
