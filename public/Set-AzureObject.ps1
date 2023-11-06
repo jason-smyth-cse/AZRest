@@ -1,4 +1,12 @@
 function Set-AzureObject(){
+
+param(
+    [parameter( Mandatory = $false)]
+    [string]$Subscription,
+    [parameter( Mandatory = $true)]
+    [hashtable]$AzObject
+)
+
 <#
   Function:  Set-AzureObject
 
@@ -15,13 +23,6 @@ function Set-AzureObject(){
     
           $object = Set-AzureObject -object $object -Subscription "2be53ae5-6e46-47df-beb9-6f3a795387b8"
 #> 
-param(
-    [parameter( Mandatory = $false)]
-    [string]$Subscription,
-    [parameter( Mandatory = $true)]
-    [hashtable]$AzObject
-)
-
 
 
     if ($Subscription){  

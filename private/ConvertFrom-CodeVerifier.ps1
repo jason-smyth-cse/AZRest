@@ -1,4 +1,15 @@
 function ConvertFrom-CodeVerifier {
+
+    [OutputType([String])]
+    param(
+        [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
+        [String]$codeVerifier,
+        [ValidateSet(
+            "plain",
+            "s256"
+        )]$Method = "s256"
+    )
+
 <#
   Function:  ConvertFrom-CodeVerifier
 
@@ -10,15 +21,7 @@ function ConvertFrom-CodeVerifier {
 
   Author  https://gist.github.com/watahani
 #>
-    [OutputType([String])]
-    param(
-        [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
-        [String]$codeVerifier,
-        [ValidateSet(
-            "plain",
-            "s256"
-        )]$Method = "s256"
-    )
+    
     process {
         switch($Method){
             "plain" {

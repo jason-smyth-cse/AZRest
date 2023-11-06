@@ -1,4 +1,10 @@
 function Get-AzureAPIVersions(){
+param(
+    [parameter( Mandatory = $true)]
+    [hashtable]$header,
+    [parameter( Mandatory = $true)]
+    [string]$SubscriptionID
+)
 <#
   Function:  Get-AzureAPIVersions
 
@@ -13,13 +19,6 @@ function Get-AzureAPIVersions(){
                                       -Header $header `
                                       -SubscriptionId "ed4ef888-5466-401c-b77a-6f9cd7cc6815" 
 #>
-param(
-    [parameter( Mandatory = $true)]
-    [hashtable]$header,
-    [parameter( Mandatory = $true)]
-    [string]$SubscriptionID
-)
-
     $dict = @{}
        
     Try{

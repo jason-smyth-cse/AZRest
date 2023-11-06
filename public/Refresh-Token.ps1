@@ -1,4 +1,11 @@
 function Refresh-Token {
+
+    [CmdletBinding()]
+    param(
+        [Parameter(mandatory=$true)]
+        [PSCustomObject]$Token
+    )
+ 
 <#
   Function:  Refresh-Token
 
@@ -12,12 +19,6 @@ function Refresh-Token {
      Refresh-Token -token $AuthToken
 
 #> 
-    [CmdletBinding()]
-    param(
-        [Parameter(mandatory=$true)]
-        [PSCustomObject]$Token
-    )
- 
 
     # We have a previous refresh token. 
     # use it to get a new token

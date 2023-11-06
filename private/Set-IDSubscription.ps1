@@ -1,4 +1,12 @@
 function Set-IdSubscription(){
+param(
+    [OutputType([hashtable])]
+    [parameter( Mandatory = $true)]
+    [string]$Subscription,
+    [parameter( Mandatory = $true)]
+    [string]$IdString
+)
+
 <#
   Function: Set-IdSubscription
 
@@ -11,15 +19,7 @@ function Set-IdSubscription(){
   Example:  
     
           $object = Set-IdSubscription -object $object -Subscription "2be53ae5-6e46-47df-beb9-6f3a795387b8"
-#> param(
-    [OutputType([hashtable])]
-    [parameter( Mandatory = $true)]
-    [string]$Subscription,
-    [parameter( Mandatory = $true)]
-    [string]$IdString
-)
-
-   # write-host "Set-IdSubscription azobject type = $($AzObject.GetType())"
+#> 
     
     
   #Get Id property and split by '/' subscription

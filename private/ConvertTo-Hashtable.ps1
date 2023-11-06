@@ -1,4 +1,12 @@
 function ConvertTo-Hashtable {
+
+    [CmdletBinding()]
+    [OutputType('hashtable')]
+    param (
+        [Parameter(ValueFromPipeline)]
+        $InputObject
+    )
+
 <#
   Function:  ConvertTo-Hashtable
   
@@ -11,12 +19,6 @@ function ConvertTo-Hashtable {
 
   Example:    $json | ConvertFrom-Json | ConvertTo-HashTable
 #>
-    [CmdletBinding()]
-    [OutputType('hashtable')]
-    param (
-        [Parameter(ValueFromPipeline)]
-        $InputObject
-    )
 
     process {
         ## Return null if the input is null. This can happen when calling the function

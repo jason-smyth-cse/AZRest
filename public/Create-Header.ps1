@@ -1,4 +1,9 @@
 function Create-Header(){
+    [CmdletBinding()]
+    param(
+        [Parameter(mandatory=$true)]
+        [PSCustomObject]$Token
+    )
 <#
   Function:  Create-Header
 
@@ -11,12 +16,6 @@ function Create-Header(){
      Create-Header -token $TokenObject 
 
 #> 
-    [CmdletBinding()]
-    param(
-        [Parameter(mandatory=$true)]
-        [PSCustomObject]$Token
-    )
-
 
            #refresh tokens about to expire
            $expirytime = ([DateTime]$Token.Expires_in).ToUniversalTime() 

@@ -1,4 +1,18 @@
 function ConvertTo-Yaml{
+    [OutputType('System.String')]
+    
+    [CmdletBinding()]
+    param (
+        [parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)]
+        [AllowNull()]
+        $inputObject,
+        [parameter(Position = 1, Mandatory = $false, ValueFromPipeline = $false)]
+        [int]$depth = 16,
+        [parameter(Position = 2, Mandatory = $false, ValueFromPipeline = $false)]
+        [int]$NestingLevel = 0,
+        [parameter(Position = 3, Mandatory = $false, ValueFromPipeline = $false)]
+        [int]$XMLAsInnerXML = 0
+    )
 <#
  .SYNOPSIS
    creates a YAML description of the data in the object
@@ -15,22 +29,7 @@ function ConvertTo-Yaml{
    The depth that you want your object scripted to
  .PARAMETER Nesting Level
    internal use only. required for formatting
-#>
-    [OutputType('System.String')]
-    
-    [CmdletBinding()]
-    param (
-        [parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)]
-        [AllowNull()]
-        $inputObject,
-        [parameter(Position = 1, Mandatory = $false, ValueFromPipeline = $false)]
-        [int]$depth = 16,
-        [parameter(Position = 2, Mandatory = $false, ValueFromPipeline = $false)]
-        [int]$NestingLevel = 0,
-        [parameter(Position = 3, Mandatory = $false, ValueFromPipeline = $false)]
-        [int]$XMLAsInnerXML = 0
-    )
-    
+#>    
     BEGIN { }
     PROCESS
     {

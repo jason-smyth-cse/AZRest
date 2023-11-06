@@ -1,4 +1,14 @@
 Function ConvertTo-Markdown {
+    [CmdletBinding()]
+    [OutputType([string])]
+    Param (
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            ValueFromPipeline = $true
+        )]
+        [PSObject[]]$InputObject
+    )
 <#
 .Synopsis
    Converts a PowerShell object to a Markdown table.
@@ -21,17 +31,6 @@ Source:
 https://www.powershellgallery.com/packages/PSMarkdown/1.1/Content/ConvertTo-Markdown.ps1
 
 #>
-    [CmdletBinding()]
-    [OutputType([string])]
-    Param (
-        [Parameter(
-            Mandatory = $true,
-            Position = 0,
-            ValueFromPipeline = $true
-        )]
-        [PSObject[]]$InputObject
-    )
-
     Begin {
         $items = @()
         $columns = [ordered]@{}

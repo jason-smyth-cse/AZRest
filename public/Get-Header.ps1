@@ -1,5 +1,42 @@
 function Get-Header(){
-<#
+    [CmdletBinding()]
+    param(
+        [Parameter(ParameterSetName="User")]
+        [string]$Username,
+        [Parameter(ParameterSetName="User")]
+        [String]$Password,
+        [Parameter(ParameterSetName="App")]
+        [Parameter(ParameterSetName="App2")]
+        [string]$AppId,
+        [Parameter(ParameterSetName="App")]
+        [string]$Thumbprint,
+        [Parameter(mandatory=$true)]
+        [string]$Tenant,
+        [Parameter(mandatory=$true)]
+        [ValidateSet(
+            "analytics",        
+            "azure",
+            "exchange",
+            "graph",
+            "keyvault",
+            "o365",
+            "portal",
+            "sharepoint",
+            "storage",
+            "windows",
+            "teams"
+        )][string]$Scope,
+        [Parameter(ParameterSetName="App2")]
+        [string]$Secret,
+        [Parameter(ParameterSetName="inter")]
+        [Switch]$interactive=$false,
+        [Parameter(mandatory=$false)]
+        [string]$Proxy,
+        [Parameter(mandatory=$false)]
+        [PSCredential]$ProxyCredential
+    )
+ 
+ <#
   Function:  Get-Header
 
   Purpose:  To Generically produce a header for use in calling Microsoft API endpoints
@@ -61,43 +98,6 @@ function Get-Header(){
 
 
 #> 
-    [CmdletBinding()]
-    param(
-        [Parameter(ParameterSetName="User")]
-        [string]$Username,
-        [Parameter(ParameterSetName="User")]
-        [String]$Password,
-        [Parameter(ParameterSetName="App")]
-        [Parameter(ParameterSetName="App2")]
-        [string]$AppId,
-        [Parameter(ParameterSetName="App")]
-        [string]$Thumbprint,
-        [Parameter(mandatory=$true)]
-        [string]$Tenant,
-        [Parameter(mandatory=$true)]
-        [ValidateSet(
-            "analytics",        
-            "azure",
-            "exchange",
-            "graph",
-            "keyvault",
-            "o365",
-            "portal",
-            "sharepoint",
-            "storage",
-            "windows",
-            "teams"
-        )][string]$Scope,
-        [Parameter(ParameterSetName="App2")]
-        [string]$Secret,
-        [Parameter(ParameterSetName="inter")]
-        [Switch]$interactive=$false,
-        [Parameter(mandatory=$false)]
-        [string]$Proxy,
-        [Parameter(mandatory=$false)]
-        [PSCredential]$ProxyCredential
-    )
- 
  
     begin {
  

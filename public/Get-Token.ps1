@@ -1,24 +1,4 @@
 function Get-Token(){
-<#
-  Function:  Get-Token
-
-  Purpose:  To Generically produce a token for use in calling Microsoft API endpoints
-
-            This is an Interactive Flow for use with Refresh tokens.  For Legacy authentication that doesnt use a refresh token
-            use the Get-Header function
-
-  Parameters: 
-                -Tenant     = disney.onmicrosoft.com
-                -Scope      = graph / azure
-
-                -Proxy      ="http://proxy:8080"
-                -ProxyCredential = (Credential Object)
-
-  Example:  
-    
-     Get-Token -scope "azure" -Tenant "disney.com" -Interactive
-
-#> 
     [CmdletBinding()]
     param(
         [Parameter(ParameterSetName="App")]
@@ -39,7 +19,26 @@ function Get-Token(){
         [PSCredential]$ProxyCredential
     )
  
+<#
+  Function:  Get-Token
 
+  Purpose:  To Generically produce a token for use in calling Microsoft API endpoints
+
+            This is an Interactive Flow for use with Refresh tokens.  For Legacy authentication that doesnt use a refresh token
+            use the Get-Header function
+
+  Parameters: 
+                -Tenant     = disney.onmicrosoft.com
+                -Scope      = graph / azure
+
+                -Proxy      ="http://proxy:8080"
+                -ProxyCredential = (Credential Object)
+
+  Example:  
+    
+     Get-Token -scope "azure" -Tenant "disney.com" -Interactive
+
+#> 
  
     begin {
  
