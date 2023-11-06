@@ -469,7 +469,7 @@ function Get-Header(){
 
             $RequestSplat = @{
                 Uri = $TokenEndpoint
-                Method = “POST”
+                Method = "POST"
                 Body = $Body 
                 UseBasicParsing = $true
             }
