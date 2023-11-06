@@ -1,3 +1,4 @@
+function ConvertTo-Hashtable {
 <#
   Function:  ConvertTo-Hashtable
   
@@ -10,7 +11,6 @@
 
   Example:    $json | ConvertFrom-Json | ConvertTo-HashTable
 #>
-function ConvertTo-Hashtable {
     [CmdletBinding()]
     [OutputType('hashtable')]
     param (

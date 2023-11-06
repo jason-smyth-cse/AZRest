@@ -1,3 +1,4 @@
+function Set-IdSubscription(){
 <#
   Function: Set-IdSubscription
 
@@ -10,9 +11,7 @@
   Example:  
     
           $object = Set-IdSubscription -object $object -Subscription "2be53ae5-6e46-47df-beb9-6f3a795387b8"
-#> 
-function Set-IdSubscription(){
-param(
+#> param(
     [OutputType([hashtable])]
     [parameter( Mandatory = $true)]
     [string]$Subscription,

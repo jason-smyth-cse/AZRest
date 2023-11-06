@@ -1,3 +1,4 @@
+function Get-Latest {
 <#
   Function:  Get-Latest
 
@@ -7,7 +8,6 @@
     
            $Hashtable | Get-latest
 #>
-function Get-Latest {
     Begin { $latest = $null }
     Process {
             if ($_  -gt $latest) { $latest = $_  }
