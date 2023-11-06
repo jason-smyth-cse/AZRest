@@ -51,17 +51,21 @@ To Generically produce a header for use in calling Microsoft API endpoints
 
 ### Example:
 
+```powershell
+
      $Header = Get-Header -scope "portal" -Tenant "disney.com" -Username "Donald@disney.com" -Password "Mickey01" 
      $Header = Get-Header -scope "graph" -Tenant "disney.com" -AppId "aa73b052-6cea-4f17-b54b-6a536be5c832" -Thumbprint "B35E2C978F83B49C36611802DC08B7DF7B58AB08" 
      $Header = Get-Header -scope "azure" -Tenant "disney.com" -AppId "aa73b052-6cea-4f17-b54b-6a536be5c715" -Secret 'xznhW@w/.Yz14[vC0XbNzDFwiRRxUtZ3'
      $Header = Get-Header -scope "azure" -Tenant "disney.com" -Interactive
 
+```
+
 ### General Usage:
 
 Use the interactive switch for gaining an OIDC token for use with Azure.
-
-`$Header = Get-Header -scope "azure" -Tenant "disney.com" -Interactive`
-
+```powershell
+$Header = Get-Header -scope "azure" -Tenant "disney.com" -Interactive
+```
 This module supports multiple authentication flows.
 
 | Authentication flow | Description                                      |

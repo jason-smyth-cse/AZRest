@@ -5,7 +5,6 @@
 
   Parameters:   -id            = A string ID representing an azure object.
                 -authHeader    = A hashtable (header) with valid authentication for Azure Management
-                -id            = An Azure object reference (string).
 
   Example:  
     

@@ -1,20 +1,20 @@
-### Function:  Get-AzureObject
+### Function:  Remove-AzureObject
 
 ### Purpose:
 
-Gets and Azure API compliant hash table / powershell object from Azure cloud objects
+Deletes an azure object.
 
 ### Parameters:
 
--azobject      = A hashtable representing an azure object.
--authHeader    = A hashtable (header) with valid authentication for Azure Management
--apiversions   = A hashtable (dictionary) of Azure API versions.
--unescape      = may be set to \$false to prevent the defaul behaviour of unescaping JSON
+-id          = The PowerShell custom object / Azure object to be modified
+-authHeader  = A hashtable (header) with valid authentication for Azure Management
+-apiversions  = A hashtable (dictionary) of Azure API versions.
+
 
 ### Example:
 
 ```powershell
- Push-Azureobject -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
+   Remove-AzureObject -AuthHeader $authHeader -Apiversions $AzAPIVersions -id $azobjectID
 ```
 
 ### General Usage:
@@ -33,7 +33,11 @@ $authHeader = Get-Header -scope "azure"  -Tenant "laurierhodes.info" -AppId "XXX
 
 if (!$AzAPIVersions){$AzAPIVersions = Get-AzureAPIVersions -header $authHeader -SubscriptionID "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
 
-$file = "C:\temp\app-001.json" 
+#Set my object ID
+$azobjectID = '/subscriptions/xxxxxxxxxxxxxxxxxxxxxxxxx/resourceGroups/Sentinel/providers/Microsoft.Web/sites/Sentinal-Enrichment'
 
-Get-jsonfile -Path $file | Push-Azureobject -authHeader $authHeader -apiversions $AzAPIVersions 
+# Remove the object
+Remove-AzureObject -AuthHeader $authHeader -Apiversions $AzAPIVersions -id $azobjectID
+
+
 ```
