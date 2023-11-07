@@ -14,7 +14,7 @@ Deploys a directory of backed up JSON represenations of objects to Azure
 ### Example:
 
 ```powershell
- Push-ObjectDirectorytoAzure -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
+ Push-ObjectDirectorytoAzure -TemplateDirectory "c:\temp\rhubarb" -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
 ```
 
 ### General Usage:
