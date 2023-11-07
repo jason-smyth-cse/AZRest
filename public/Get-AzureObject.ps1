@@ -7,20 +7,6 @@ param(
     [parameter( Mandatory = $true)]
     $apiversions
 )
-<#
-  Function:  Get-AzureObject
-
-  Purpose:  Gets and Azure API compliant hash table from Azure cloud objects
-
-  Parameters:   -apiversions   = A hashtable representing current API versions
-                -authHeader    = A hashtable (header) with valid authentication for Azure Management
-                -id            = An Azure object reference (string).
-
-  Example:  
-    
-             Get-Azureobject -AuthHeader $authHeader -Apiversions $AzAPIVersions -azobject $azobject
-#> 
-
 Process  {
     $IDArray = ($id).split("/")
 
@@ -84,7 +70,7 @@ Process  {
   try{
     $obApiversion = $($apiversions["$($objecttype)"])
       write-debug "(function Get-AzureObject) ObjectType = $($objecttype)"
-        write-debug "obapiversion = $obApiversion"
+      write-debug "obapiversion = $obApiversion"
   }
   catch{
     write-warning "(function Get-AzureObject) version retreival failure with $objecttype - $($Error[0].Exception.GetType().FullName)"
@@ -103,14 +89,18 @@ Process  {
   write-debug "(function Get-AzureObject) API Version derived as $obapiversion  for type $objecttype"
   }
 
-
+  # Now I actually fetch the object from Azure
   $uri = "https://management.azure.com/$($id)?api-version=$($obApiversion)"
-  write-debug "(function Get-AzureObject) uri = $uri"
+
   # A new exception for workbooks needing an additional parameter to get content
   # &canFetchContent
    if ($objecttype -eq "microsoft.insights/workbooks"){ $uri = $uri + '&canFetchContent=true'}
 
-    Invoke-RestMethod -Uri $uri -Method GET -Headers $authHeader 
+   $object = Invoke-RestMethod -Uri $uri -Method GET -Headers $authHeader 
+   
+   $object = ConvertTo-CleanAzureObject -azobject $object 
+   
+   return $object
   }
 
 

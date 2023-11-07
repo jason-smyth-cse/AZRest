@@ -31,7 +31,7 @@ function Get-Header(){
         [Parameter(ParameterSetName="inter")]
         [Switch]$interactive=$false,
         [Parameter(ParameterSetName="RefreshToken")]
-        [PSCustomObject]$TokenObject
+        [PSCustomObject]$TokenObject,
         [Parameter(mandatory=$false)]
         [string]$Proxy,
         [Parameter(mandatory=$false)]

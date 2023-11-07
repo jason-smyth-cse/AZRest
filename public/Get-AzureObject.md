@@ -20,10 +20,7 @@ This module requires a valid header with read access to the identified Azure obj
 
 Note the requirement for the APIVersions dictionary object which must have been created earlier using the Get-AzureAPIVersions function.  This will provide the function a reference table to select the latest API versions for a given object type.  
 
-
-
 ```powershell
-
 #Get an Authorised Header
 
 $authHeader = Get-Header -scope "azure"  -Tenant "laurierhodes.info" -AppId "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX" `
@@ -39,5 +36,10 @@ $object = $null
 $object =    Get-Azureobject -AuthHeader $authHeader -apiversions $AzAPIVersions -id $id
 
 Out-File -FilePath "C:\temp\myapp-001a.json" -InputObject (convertto-json -InputObject $object -Depth 10) -Force 
-
 ```
+
+### Coding Notes:
+
+The largest part of the function is deriving what type of object is represented by the passed ID string.  Once the object type is determined, the latest API version can be gained from the '$AzAPIVersions' dictionary.
+
+The final step utillises the private 'ConvertTo-CleanAzureObject' function which removes ReadOnly properties to aid in the redeployment of the object as a potential template.  This 'ConvertTo-CleanAzureObject' function is likely to need updating as additional Azure object types are tested for deployment & new read-only properties are discovered..
