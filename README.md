@@ -56,5 +56,5 @@ $object = $null
 # Get  a PowerShell object for the Azure object specified
 $object =  Get-Azureobject -AuthHeader $authHeader -apiversions $AzAPIVersions -id $id
 
-Out-File -FilePath "C:\temp\$($object.name).json" -InputObject (convertto-json -InputObject $object -Depth 10) -Force 
+Out-File -FilePath "$($outfolder)\$($object.name).json" -InputObject (convertto-json -InputObject $object -Depth 10) -Force 
 ```
