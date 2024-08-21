@@ -18,6 +18,9 @@ function ConvertTo-Yaml{
    creates a YAML description of the data in the object
  .DESCRIPTION
    This produces YAML from any object you pass to it. It isn't suitable for the huge objects produced by some of the cmdlets such as Get-Process, but fine for simple objects
+   
+   https://www.powershellgallery.com/packages/PSYaml/1.0.2/Content/Public%5CConvertTo-Yaml.ps1
+   
  .EXAMPLE
    $array=@()
    $array+=Get-Process wi* | Select-Object-Object Handles,NPM,PM,WS,VM,CPU,Id,ProcessName

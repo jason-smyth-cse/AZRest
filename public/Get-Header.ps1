@@ -170,7 +170,7 @@ function Get-Header(){
         #Credit to https://adamtheautomator.com/powershell-graph-api/#Acquire_an_Access_Token_Using_a_Certificate
         # Authenticating with Certificate
         if (!([string]::IsNullOrEmpty($Thumbprint)) -And ($interactive -eq $false)){
-            write-host "+++ Certificate Authentication"
+            write-debug "+++ Certificate Authentication"
  
             # Try Local Machine Certs
             $Certificate = ((Get-ChildItem -Path Cert:\LocalMachine  -force -Recurse )| Where-Object {$_.Thumbprint -match $Thumbprint});
