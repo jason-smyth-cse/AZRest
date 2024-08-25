@@ -1,8 +1,8 @@
-### Function:  Get-AzureObject
+### Function:  Push-AzureObject
 
 ### Purpose:
 
-Gets and Azure API compliant hash table / powershell object from Azure cloud objects
+Pushes an Azure API compliant hash table / powershell object into an Azure subscription
 
 ### Parameters:
 
