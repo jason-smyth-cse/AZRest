@@ -373,7 +373,7 @@ function Get-Header(){
            'azure' {}
            'graph' {
                       $Body.Remove('scope')           
-                      $Body.Add('resource', [system.uri]::EscapeDataString($ResourceID))  
+                      $Body.Add('resource', $ResourceID)  
                     }
            'exchange' {}           
            'keyvault' {}
