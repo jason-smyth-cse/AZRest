@@ -5,9 +5,7 @@ param(
     [parameter( Mandatory = $true)]
     $authHeader,
     [parameter( Mandatory = $true)]
-    $apiversions,
-    [parameter( Mandatory = $false)]
-    [bool]$unescape=$true
+    $apiversions
 )
 
 
@@ -53,15 +51,15 @@ Process  {
    # The actual payload of the API request is simply deployed in json
    $jsonbody =  ConvertTo-Json -Depth 50 -InputObject $azobject 
    
-   if ($unescape -eq $true){
-     # Invoke-RestMethod -Uri $uri -Method PUT -Headers $authHeader -Body $( $jsonbody  | % { [System.Text.RegularExpressions.Regex]::Unescape($_) })   
-    Invoke-RestMethod -Uri $uri -Method PUT -Headers $authHeader -Body $jsonbody  
-   }
-   else  
-   {
-      Invoke-RestMethod -Uri $uri -Method PUT -Headers $authHeader -Body $jsonbody   
-   }
-   
+
+ # Escape non-ascii characters
+   $jsonbody = [Regex]::Replace($jsonbody, 
+      '[^\u0000-\u007F]', 
+      {param($m) '\u{0:x4}' -f [int]([char]$m.Value)})
+              
+    
+   Invoke-RestMethod -Uri $uri -Method PUT -Headers $authHeader -Body $jsonbody
+
   }
 
 }
