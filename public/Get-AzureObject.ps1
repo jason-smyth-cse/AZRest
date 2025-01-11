@@ -94,15 +94,43 @@ Process  {
 
   # A new exception for workbooks needing an additional parameter to get content
   # &canFetchContent
+  
    if ($objecttype -eq "microsoft.insights/workbooks"){ $uri = $uri + '&canFetchContent=true'}
 
-   $object = Invoke-RestMethod -Uri $uri -Method GET -Headers $authHeader 
-   
-   $object = ConvertTo-CleanAzureObject -azobject $object 
-   
-   return $object
+   try {
+		$object = Invoke-RestMethod -Uri $uri -Method GET -Headers $authHeader -ErrorAction Stop 
+		# Only proceed with conversion if we got a valid object
+		if ($object) {
+				$object = ConvertTo-CleanAzureObject -azobject $object
+				return $object
+		}
+   }
+   catch {
+        $statusCode = $_.Exception.Response.StatusCode.value__
+        $statusDescription = $_.Exception.Response.StatusDescription
+        
+        switch ($statusCode) {
+            404 {
+                Write-Warning "Resource not found: $id"
+                Write-Debug "(function Get-AzureObject) 404 Not Found for URI: $uri"
+                return $null
+            }
+            401 {
+                Write-Warning "Unauthorized access to resource: $id. Please check authentication."
+                Write-Debug "(function Get-AzureObject) 401 Unauthorized for URI: $uri"
+                throw
+            }
+            403 {
+                Write-Warning "Forbidden access to resource: $id. Please check permissions."
+                Write-Debug "(function Get-AzureObject) 403 Forbidden for URI: $uri"
+                throw
+            }
+            default {
+                Write-Warning "Error accessing resource $id. Status code: $statusCode - $statusDescription"
+                Write-Debug "(function Get-AzureObject) Error for URI: $uri - Status: $statusCode $statusDescription"
+                throw
+            }
+        }
+    }
   }
-
-
-
 }
