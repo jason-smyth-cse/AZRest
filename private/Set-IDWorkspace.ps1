@@ -1,7 +1,7 @@
-function Set-IDSubscription(){
-param(    
+function Set-IDWorkspace(){
+param(
     [parameter( Mandatory = $true)]
-    [string]$Subscription,
+    [string]$Workspace,
     [parameter( Mandatory = $true)]
     [string]$IdString
 )
@@ -13,21 +13,21 @@ param(
 
   Parameters:   [OutputType([hashtable])]
 				-object        = The PowerShell custom object / Azure object to be modified
-                -subscription  = The new subscription gui to deploy to
+                -workspace     = The new workspace gui to deploy to
 
 
   Example:  
     
-          $object = Set-IdSubscription -object $object -Subscription "2be53ae5-6e46-47df-beb9-6f3a795387b8"
+          $object = Set-IdWorkspace -object $object -Workspace "ingested-data-sentinel"
 #>
     
     
-  #Get Id property and split by '/' subscription
+  #Get Id property and split by '/' workspace
     $IdArray = $IdString.split('/')
      
-  If ($IdArray[1] -eq 'subscriptions'){
+  If ($IdArray[7] -eq 'workspaces'){
     # substitute the subscription id with the new version
-    $IdArray[2] = $Subscription
+    $IdArray[8] = $Workspace
 
     #reconstruct the Id
     $id = ""
